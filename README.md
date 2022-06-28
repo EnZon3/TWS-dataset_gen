@@ -46,9 +46,9 @@ PASSWORD is the password you use to access the /getTopHeadlines endpoint.
 
 ## License
 
-TWS-Dataset_gen is a program that slowly generates a dataset of the sentiment scores of news headlines' titles.
+TWS-Dataset_gen is a program that slowly generates a dataset of the sentiment scores of news headlines' titles
 
-Copyright © <year>  EnZon3
+Copyright © 2022 EnZon3
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
