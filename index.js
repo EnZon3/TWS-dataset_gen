@@ -69,3 +69,7 @@ app.get("/get", (req, res) => {
         res.status(401).send("Unauthorized");
     }
 });
+
+app.get("/log", (req, res) => {
+   res.sendFile('./storage/get.log'); 
+});
