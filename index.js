@@ -42,9 +42,9 @@ async function getTopHeadLines() {
             var headlines = fs.readFileSync("./storage/headlines.json", "utf8");
             var jsonHeadlines = JSON.parse(headlines);
             //check if title is already in headlines.json, if so skip
-            if(jsonHeadlines.includes(title) == true) {
-                console.log('HEADLINE NOT PUSHED: already in json');
-                fs.appendFileSync("./storage/get.log", 'HEADLINE NOT PUSHED: already in json\n');
+            if(jsonHeadlines.includes(title) == true || json.status != 'ok') {
+                console.log('HEADLINE NOT PUSHED: condition not met');
+                fs.appendFileSync("./storage/get.log", 'HEADLINE NOT PUSHED: condition not met<br>\n');
             } else {
                 jsonHeadlines.push(title);
                 fs.writeFileSync("./storage/headlines.json", JSON.stringify(jsonHeadlines));
