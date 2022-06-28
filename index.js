@@ -41,17 +41,18 @@ async function getTopHeadLines() {
             var jsonHeadlines = JSON.parse(headlines);
             //check if title is already in headlines.json, if so skip
             if(jsonHeadlines.includes(title)) {
-                continue;
-            }
-            jsonHeadlines.push(title);
-            fs.writeFileSync("./storage/headlines.json", JSON.stringify(jsonHeadlines));
+                console.log('already in json');
+            } else {
+                jsonHeadlines.push(title);
+                fs.writeFileSync("./storage/headlines.json", JSON.stringify(jsonHeadlines));
 
-            //get sentiment json and save to file
-            var sentiment = fs.readFileSync("./storage/sentiment.json", "utf8");
-            var jsonSentiment = JSON.parse(sentiment);
-            let sentimentResult = sent.analyze(title);
-            jsonSentiment.push(sentimentResult);
-            fs.writeFileSync("./storage/sentiment.json", JSON.stringify(jsonSentiment));
+                //get sentiment json and save to file
+                var sentiment = fs.readFileSync("./storage/sentiment.json", "utf8");
+                var jsonSentiment = JSON.parse(sentiment);
+                let sentimentResult = sent.analyze(title);
+                jsonSentiment.push(sentimentResult);
+                fs.writeFileSync("./storage/sentiment.json", JSON.stringify(jsonSentiment));
+            }
         }
     }
     console.log(`Finished getting top headlines for the day of ${new Date()}, Let's see what happens next!`);
