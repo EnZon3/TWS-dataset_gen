@@ -12,6 +12,8 @@ TWS is a project of mine that I'm working on.
 
 The project's main goal is to analyze the sentiment of what is going on in the world.
 
+TWS will become a yearly thing that I do every year or month.
+
 ## When is TWS going to be finished?
 
 The answer is I don't know. It really depends on how long I run it for. Could be a few days, weeks, or even months. or if I run out of storage space to hold the dataset.
