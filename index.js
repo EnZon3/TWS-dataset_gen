@@ -5,6 +5,7 @@ const port = process.env.PORT || 8080;
 const fs = require("fs");
 const sent = require("./analyze_sentiment.js");
 const rateLimit = require('express-rate-limit')
+const { timingSafeEqual } = require('crypto')
 require("dotenv").config();
 
 
@@ -47,7 +48,6 @@ async function getTopHeadLines() {
             } else {
                 jsonHeadlines.push(title);
                 fs.writeFileSync("./storage/headlines.json", JSON.stringify(jsonHeadlines));
-
                 //get sentiment json and save to file
                 var sentiment = fs.readFileSync("./storage/sentiment.json", "utf8");
                 var jsonSentiment = JSON.parse(sentiment);
@@ -64,7 +64,7 @@ async function getTopHeadLines() {
 
 //make a password protected route to get top headlines
 app.get("/get", (req, res) => {
-    if(req.query.pw === process.env.PASSWORD) {
+    if(req.query.pw.length === process.env.PASSWORD.length && timingSafeEqual(Buffer.from(req.query.pw), Buffer.from(process.env.PASSWORD))) {
         getTopHeadLines();
         res.send(new Date());
     } else {
@@ -87,7 +87,7 @@ app.get("/log",  logLimiter, (req, res) => {
 });
 
 app.get("/aLog", (req, res) => {
-    if(req.query.pw === process.env.PASSWORD) {
+    if(req.query.pw.length === process.env.PASSWORD.length && timingSafeEqual(Buffer.from(req.query.pw), Buffer.from(process.env.PASSWORD))) {
         var file = fs.readFileSync('./storage/get.log', 'utf-8');
     	res.send(file);
     } else {
