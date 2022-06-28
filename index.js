@@ -40,8 +40,9 @@ async function getTopHeadLines() {
             var headlines = fs.readFileSync("./storage/headlines.json", "utf8");
             var jsonHeadlines = JSON.parse(headlines);
             //check if title is already in headlines.json, if so skip
-            if(jsonHeadlines.includes(title)) {
-                console.log('already in json');
+            if(jsonHeadlines.includes(title) == true) {
+                console.log('HEADLINE NOT PUSHED: already in json');
+                fs.appendFileSync("./storage/get.log", 'HEADLINE NOT PUSHED: already in json\n');
             } else {
                 jsonHeadlines.push(title);
                 fs.writeFileSync("./storage/headlines.json", JSON.stringify(jsonHeadlines));
@@ -55,9 +56,9 @@ async function getTopHeadLines() {
             }
         }
     }
-    console.log(`Finished getting top headlines for the day of ${new Date()}, Let's see what happens next!`);
+    console.log(`Finished getting top headlines for the day of ${new Date()}`);
     //log into get.log
-    fs.appendFileSync("./storage/get.log", `Finished getting top headlines for the day of ${new Date()}, Let's see what happens next!\n`);
+    fs.appendFileSync("./storage/get.log", `Finished getting top headlines for the day of ${new Date()}\n`);
 }
 
 //make a password protected route to get top headlines
@@ -71,5 +72,6 @@ app.get("/get", (req, res) => {
 });
 
 app.get("/log", (req, res) => {
-   res.sendFile('./storage/get.log'); 
+    var file = fs.readFileSync('./storage/get.log', 'utf-8');
+    res.send(file);
 });
