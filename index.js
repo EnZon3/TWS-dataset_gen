@@ -76,7 +76,7 @@ const logLimiter = rateLimit({
 	windowMs: 30 * 60 * 1000, // 30 minutes
 	max: 1, // Limit each IP to 5 requests per `window` (here, per 30 minutes)
 	message:
-		'see <a href="">here</a> for more info.',
+		'see <a href="https://the-worlds-sentiment.enzon3.repl.co/#:~:text=Why%20am%20I%20only%20limited%20to%20only%201%20log%20request%20per%20hour%3F">here</a> for more info.',
 	standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
 	legacyHeaders: false, // Disable the `X-RateLimit-*` headers
 })
