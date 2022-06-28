@@ -39,6 +39,10 @@ async function getTopHeadLines() {
             //get titles json and save to file
             var headlines = fs.readFileSync("./storage/headlines.json", "utf8");
             var jsonHeadlines = JSON.parse(headlines);
+            //check if title is already in headlines.json, if so skip
+            if(jsonHeadlines.includes(title)) {
+                continue;
+            }
             jsonHeadlines.push(title);
             fs.writeFileSync("./storage/headlines.json", JSON.stringify(jsonHeadlines));
 
