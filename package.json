@@ -13,6 +13,7 @@
     "apos-to-lex-form": "^1.0.5",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
+    "express-rate-limit": "^6.4.0",
     "natural": "^5.2.2",
     "node-fetch-cjs": "^3.2.6",
     "stopword": "^2.0.2"

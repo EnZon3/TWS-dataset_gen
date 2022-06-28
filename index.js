@@ -4,6 +4,7 @@ const app = express();
 const port = process.env.PORT || 8080;
 const fs = require("fs");
 const sent = require("./analyze_sentiment.js");
+const rateLimit = require('express-rate-limit')
 require("dotenv").config();
 
 
@@ -58,7 +59,7 @@ async function getTopHeadLines() {
     }
     console.log(`Finished getting top headlines for the day of ${new Date()}`);
     //log into get.log
-    fs.appendFileSync("./storage/get.log", `Finished getting top headlines for the day of ${new Date()}\n`);
+    fs.appendFileSync("./storage/get.log", `Finished getting top headlines for the day of ${new Date()}<br>\n`);
 }
 
 //make a password protected route to get top headlines
@@ -71,7 +72,25 @@ app.get("/get", (req, res) => {
     }
 });
 
-app.get("/log", (req, res) => {
+const logLimiter = rateLimit({
+	windowMs: 30 * 60 * 1000, // 30 minutes
+	max: 1, // Limit each IP to 5 requests per `window` (here, per 30 minutes)
+	message:
+		'see <a href="">here</a> for more info.',
+	standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+	legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+})
+
+app.get("/log",  logLimiter, (req, res) => {
     var file = fs.readFileSync('./storage/get.log', 'utf-8');
     res.send(file);
+});
+
+app.get("/aLog", (req, res) => {
+    if(req.query.pw === process.env.PASSWORD) {
+        var file = fs.readFileSync('./storage/get.log', 'utf-8');
+    	res.send(file);
+    } else {
+        res.status(401).send("Unauthorized");
+    }
 });
