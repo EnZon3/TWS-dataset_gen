@@ -25,7 +25,11 @@ async function getCountries() {
     return await splitData;
 }
 
-
+function EST() {
+    let date = new Date();
+    let easternTime = date.toLocaleString("en-US", {timeZone: "America/New_York"});
+    return easternTime;
+}
 
 async function getTopHeadLines() {
     const countries = await getCountries();
@@ -43,8 +47,14 @@ async function getTopHeadLines() {
             var jsonHeadlines = JSON.parse(headlines);
             //check if title is already in headlines.json, if so skip
             if(jsonHeadlines.includes(title) == true || json.status != 'ok') {
-                console.log('HEADLINE NOT PUSHED: condition not met');
-                fs.appendFileSync("./storage/get.log", 'HEADLINE NOT PUSHED: condition not met<br>\n');
+                if(jsonHeadlines.includes(title)) {
+					console.log('WARN: HEADLINE NOT PUSHED: already in file');
+                fs.appendFileSync("./storage/err.log", `WARN: [${EST()}]: HEADLINE NOT PUSHED: already in file.<br>\n`);
+				}
+				if(json.status != 'ok') {
+					console.log('HEADLINE NOT PUSHED: API GET Failed');
+                fs.appendFileSync("./storage/err.log", `ERR: [${EST()}]: HEADLINE NOT PUSHED: API GET Failed, API returned: ${json.status}<br>\n`);
+				}
             } else {
                 jsonHeadlines.push(title);
                 fs.writeFileSync("./storage/headlines.json", JSON.stringify(jsonHeadlines));
@@ -57,9 +67,9 @@ async function getTopHeadLines() {
             }
         }
     }
-    console.log(`Finished getting top headlines for the day of ${new Date()}`);
+    console.log(`[${EST()}]: Finished getting top headlines`);
     //log into get.log
-    fs.appendFileSync("./storage/get.log", `Finished getting top headlines for the day of ${new Date()}<br>\n`);
+    fs.appendFileSync("./storage/get.log", `[${EST()}]: Finished getting top headlines<br>\n`);
 }
 
 //make a password protected route to get top headlines
