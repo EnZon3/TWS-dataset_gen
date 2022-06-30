@@ -17,8 +17,6 @@ app.listen(port, () => {
     console.log(`running`);
 });
 
-let englishCountries;
-
 async function getCountries() {
     let countries = await fs.promises.readFile("englishCountries.txt", "utf8");
     var splitData = countries.split(",");
