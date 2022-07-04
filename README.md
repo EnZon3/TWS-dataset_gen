@@ -4,7 +4,7 @@ TWS-Dataset is a program that slowly generates a dataset of top headlines from e
 
 It's for a project that I'm working on called 'The World's Sentiment'.
 
-I'm only going to give a quick explaination of what TWS is and what it's doing.
+I'm only going to give a quick explanation of what TWS is and what it's doing.
 
 # What is The World's Sentiment?
 
@@ -20,7 +20,7 @@ The answer is I don't know. It really depends on how long I run it for. Could be
 
 ## What is TWS doing?
 
-Every day, at 7:30 PM, TWS-dataset will append the top headlines from the english countries to a file, and the sentiment of the headlines will be analyzed and appended to a file.
+Every 8 hours, TWS-dataset will append the top headlines from the english countries to a file, and the sentiment of the headlines will be analyzed and appended to a file.
 
 ## How do I run TWS?
 
